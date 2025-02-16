@@ -17,15 +17,15 @@ public class Reponse {
 
     // Méthodes
     public void afficher_reponse() {
-        // Implémentation pour afficher une réponse
+        // TODO: Implémenter l'affichage des détails de la réponse
     }
 
     public void ajouter_reponse() {
-        // Implémentation pour ajouter une réponse
+        // TODO: Implémenter l'ajout d'une réponse dans la base de données
     }
 
     public void supprimer_reponse() {
-        // Implémentation pour supprimer une réponse
+        // TODO: Implémenter la suppression d'une réponse de la base de données
     }
 
     // Getters et Setters
