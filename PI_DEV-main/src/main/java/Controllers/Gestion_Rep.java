@@ -209,4 +209,15 @@ public class Gestion_Rep implements Initializable {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    public void initializeWithReclamation(int reclamationId) {
+        // Pre-fill the reclamation ID field
+        reclamationIdField.setText(String.valueOf(reclamationId));
+        
+        // Optionally disable the field to prevent changes
+        reclamationIdField.setEditable(false);
+        
+        // Set focus to the content field
+        contenuField.requestFocus();
+    }
 }
