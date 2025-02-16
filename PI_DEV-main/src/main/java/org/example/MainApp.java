@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
 
 public class MainApp extends Application {
 
@@ -12,7 +13,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         try {
             // Load the FXML file
-            Parent root = FXMLLoader.load(getClass().getResource("/Gestion_Rec.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/UserReclamation.fxml"));
             
             // Create the Scene
             Scene scene = new Scene(root);
@@ -20,9 +21,16 @@ public class MainApp extends Application {
             // Set the Stage
             primaryStage.setTitle("Gestion des Réclamations");
             primaryStage.setScene(scene);
+            primaryStage.setMaximized(true); // Make the window maximized by default
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
+            // Show error dialog
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Application Error");
+            alert.setContentText("Failed to start application: " + e.getMessage());
+            alert.showAndWait();
         }
     }
 
