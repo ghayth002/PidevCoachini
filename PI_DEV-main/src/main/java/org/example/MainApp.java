@@ -13,7 +13,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         try {
             // Load the FXML file
-            Parent root = FXMLLoader.load(getClass().getResource("/UserReclamation.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/Gestion_Rec.fxml"));
             
             // Create the Scene
             Scene scene = new Scene(root);

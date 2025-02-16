@@ -87,24 +87,38 @@
             <!-- Main Content Area -->
             <VBox HBox.hgrow="ALWAYS">
                 <!-- Top Bar -->
-                <VBox styleClass="top-bar" minHeight="50.0" maxHeight="50.0">
-                    <HBox alignment="CENTER_RIGHT" spacing="15" styleClass="top-bar-content">
+                <VBox styleClass="modern-top-bar" minHeight="70.0" maxHeight="70.0">
+                    <HBox alignment="CENTER_LEFT" spacing="20" styleClass="top-bar-content">
                         <padding>
-                            <Insets right="20" left="20"/>
+                            <Insets right="30" left="30"/>
                         </padding>
-                        <Label text="Centre d'Assistance" styleClass="page-title">
-                            <font>
-                                <Font name="System Bold" size="16.0"/>
-                            </font>
-                        </Label>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <HBox alignment="CENTER" styleClass="search-container">
-                            <TextField fx:id="searchField" promptText="Rechercher dans vos réclamations..." 
-                                     styleClass="search-box"/>
-                            <FontIcon iconLiteral="fas-search" iconSize="16" styleClass="search-icon"/>
+                        <HBox alignment="CENTER_LEFT" spacing="15">
+                            <StackPane styleClass="header-icon-container">
+                                <FontIcon iconLiteral="fas-headset" iconSize="24" styleClass="header-icon"/>
+                            </StackPane>
+                            <VBox spacing="2">
+                                <Label text="Centre d'Assistance" styleClass="modern-header-title"/>
+                                <Label text="Service Client 24/7" styleClass="header-subtitle"/>
+                            </VBox>
                         </HBox>
-                        <FontIcon iconLiteral="fas-bell" iconSize="20" styleClass="notification-icon"/>
-                        <FontIcon iconLiteral="fas-user-circle" iconSize="24" styleClass="profile-icon"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <HBox fx:id="searchContainer" styleClass="modern-search-container">
+                            <StackPane styleClass="search-icon-container">
+                               
+                            </StackPane>
+                            <TextField fx:id="searchField" promptText="Rechercher dans vos réclamations..." 
+                                     styleClass="modern-search-field"/>
+                        </HBox>
+                        <Button fx:id="refreshButton" styleClass="modern-refresh-button">
+                            <graphic>
+                                <FontIcon iconLiteral="fas-sync-alt" iconSize="16"/>
+                            </graphic>
+                        </Button>
+                        <Button styleClass="modern-profile-button">
+                            <graphic>
+                                <FontIcon iconLiteral="fas-user-circle" iconSize="20"/>
+                            </graphic>
+                        </Button>
                     </HBox>
                 </VBox>
 
@@ -116,19 +130,21 @@
                         </padding>
 
                         <!-- Welcome Card -->
-                        <VBox styleClass="welcome-card" spacing="20">
+                        <VBox styleClass="modern-welcome-card" spacing="25">
                             <padding>
                                 <Insets top="35" right="40" bottom="35" left="40"/>
                             </padding>
-                            <HBox alignment="CENTER_LEFT" spacing="20">
-                                <FontIcon iconLiteral="fas-hands-helping" iconSize="40" styleClass="welcome-icon"/>
-                                <VBox spacing="8">
-                                    <Label text="Bienvenue dans votre espace réclamation" styleClass="welcome-title"/>
-                                    <Label text="Notre équipe est à votre écoute 24/7" styleClass="welcome-subtitle"/>
+                            <HBox alignment="CENTER_LEFT" spacing="25">
+                                <StackPane styleClass="modern-logo-container">
+                                    <FontIcon iconLiteral="fas-hands-helping" iconSize="40" styleClass="welcome-icon"/>
+                                </StackPane>
+                                <VBox spacing="10">
+                                    <Label text="Bienvenue dans votre espace réclamation" styleClass="modern-welcome-title"/>
+                                    <Label text="Notre équipe est à votre écoute pour vous assister" styleClass="modern-welcome-subtitle"/>
+                                    <Label text="Nous nous engageons à traiter chaque réclamation avec attention et professionnalisme. Votre satisfaction est notre priorité absolue." 
+                                           styleClass="modern-welcome-text" wrapText="true"/>
                                 </VBox>
                             </HBox>
-                            <Label text="Nous nous engageons à traiter chaque réclamation avec attention et professionnalisme. Votre satisfaction est notre priorité absolue." 
-                                   styleClass="welcome-text" wrapText="true"/>
                         </VBox>
 
                         <!-- Content Layout -->
@@ -152,7 +168,11 @@
                                             </graphic>
                                         </Label>
                                         <ComboBox fx:id="typeComboBox" promptText="Sélectionnez le type de réclamation" 
-                                                 styleClass="combo-box-field" maxWidth="Infinity"/>
+                                                 styleClass="modern-combo-box" maxWidth="Infinity">
+                                            <HBox.margin>
+                                                <Insets top="5" bottom="5"/>
+                                            </HBox.margin>
+                                        </ComboBox>
                                     </VBox>
                                     
                                     <VBox spacing="10">
@@ -165,15 +185,10 @@
                                                  styleClass="text-area-field" wrapText="true" prefRowCount="5"/>
                                     </VBox>
                                     
-                                    <VBox spacing="10">
-                                        <Label text="Date de l'incident" styleClass="field-label">
-                                            <graphic>
-                                                <FontIcon iconLiteral="fas-calendar-alt" iconSize="16" styleClass="field-icon"/>
-                                            </graphic>
-                                        </Label>
-                                        <DatePicker fx:id="datePicker" promptText="Sélectionnez la date" 
-                                                  styleClass="date-picker-field" maxWidth="Infinity"/>
-                                    </VBox>
+                                    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="info-box">
+                                        <FontIcon iconLiteral="fas-info-circle" iconSize="16" styleClass="info-icon"/>
+                                        <Label text="La date sera automatiquement ajoutée à votre réclamation" styleClass="info-text"/>
+                                    </HBox>
                                 </VBox>
                                 
                                 <HBox spacing="15" alignment="CENTER_RIGHT" styleClass="button-container">
@@ -192,18 +207,6 @@
 
                             <!-- Status Section -->
                             <VBox spacing="20" maxWidth="600" HBox.hgrow="ALWAYS">
-                                <!-- Search Box -->
-                                <HBox styleClass="modern-search-container" alignment="CENTER" spacing="10">
-                                    <FontIcon iconLiteral="fas-search" iconSize="16" styleClass="search-icon"/>
-                                    <TextField fx:id="reclamationSearch" promptText="Rechercher dans vos réclamations..." 
-                                             styleClass="modern-search-field" HBox.hgrow="ALWAYS"/>
-                                    <Button fx:id="refreshButton" styleClass="modern-refresh-button">
-                                        <graphic>
-                                            <FontIcon iconLiteral="fas-sync-alt" iconSize="16" styleClass="refresh-icon"/>
-                                        </graphic>
-                                    </Button>
-                                </HBox>
-
                                 <!-- Reclamations List -->
                                 <VBox styleClass="table-card" spacing="20" VBox.vgrow="ALWAYS">
                                     <padding>
@@ -215,6 +218,12 @@
                                             <Label text="Historique des Réclamations" styleClass="table-title"/>
                                             <Label text="Suivez l'état de vos demandes en temps réel" styleClass="table-subtitle"/>
                                         </VBox>
+                                        <Region HBox.hgrow="ALWAYS"/>
+                                        <Button fx:id="refreshButton" styleClass="modern-refresh-button">
+                                            <graphic>
+                                                <FontIcon iconLiteral="fas-sync-alt" iconSize="16"/>
+                                            </graphic>
+                                        </Button>
                                     </HBox>
                                     
                                     <ListView fx:id="reclamationTable" styleClass="custom-table" VBox.vgrow="ALWAYS">
