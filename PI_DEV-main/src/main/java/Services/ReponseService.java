@@ -16,11 +16,12 @@ public class ReponseService implements Crud<Reponse> {
 
     @Override
     public boolean create(Reponse obj) throws Exception {
-        String sql = "INSERT INTO reponse (id_reclamation, date_reponse, contenu) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO reponse (id_reclamation, date_reponse, contenu, status) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, obj.getId_reclamation());
             stmt.setDate(2, new java.sql.Date(obj.getDate_reponse().getTime()));
             stmt.setString(3, obj.getContenu());
+            stmt.setString(4, obj.getStatus());
 
             int res = stmt.executeUpdate();
             if (res > 0) {
@@ -37,12 +38,13 @@ public class ReponseService implements Crud<Reponse> {
 
     @Override
     public boolean update(Reponse obj) throws Exception {
-        String sql = "UPDATE reponse SET id_reclamation = ?, date_reponse = ?, contenu = ? WHERE id = ?";
+        String sql = "UPDATE reponse SET id_reclamation = ?, date_reponse = ?, contenu = ?, status = ? WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, obj.getId_reclamation());
             stmt.setDate(2, new java.sql.Date(obj.getDate_reponse().getTime()));
             stmt.setString(3, obj.getContenu());
-            stmt.setInt(4, obj.getId());
+            stmt.setString(4, obj.getStatus());
+            stmt.setInt(5, obj.getId());
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -87,7 +89,8 @@ public class ReponseService implements Crud<Reponse> {
                         rs.getInt("id"),
                         rs.getInt("id_reclamation"),
                         rs.getDate("date_reponse"),
-                        rs.getString("contenu")
+                        rs.getString("contenu"),
+                        rs.getString("status")
                 );
                 reponses.add(obj);
             }
@@ -111,7 +114,8 @@ public class ReponseService implements Crud<Reponse> {
                         rs.getInt("id"),
                         rs.getInt("id_reclamation"),
                         rs.getDate("date_reponse"),
-                        rs.getString("contenu")
+                        rs.getString("contenu"),
+                        rs.getString("status")
                 );
             }
         } catch (SQLException e) {
@@ -133,7 +137,8 @@ public class ReponseService implements Crud<Reponse> {
                         rs.getInt("id"),
                         rs.getInt("id_reclamation"),
                         rs.getDate("date_reponse"),
-                        rs.getString("contenu")
+                        rs.getString("contenu"),
+                        rs.getString("status")
                 );
             }
         } catch (SQLException e) {

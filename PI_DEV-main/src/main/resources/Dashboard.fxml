@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controllers.DashboardController">
+    <children>
+        <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" 
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            
+            <!-- Navigation Sidebar -->
+            <VBox minWidth="180.0" maxWidth="180.0" styleClass="bg" HBox.hgrow="NEVER">
+                <children>
+                    <!-- Logo Section -->
+                    <VBox alignment="CENTER" minHeight="120">
+                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/logor.png"/>
+                            </image>
+                        </ImageView>
+                    </VBox>
+
+                    <Separator prefWidth="160.0"/>
+                    
+                    <!-- Navigation Buttons -->
+                    <Button fx:id="dashboardButton" styleClass="nav-button, active" text="Tableau de bord">
+                        <graphic>
+                            <FontIcon iconLiteral="fas-chart-line" iconSize="20"/>
+                        </graphic>
+                    </Button>
+                    
+                    <Separator prefWidth="160.0"/>
+                    
+                    <Button fx:id="reclamationButton" styleClass="nav-button" text="Réclamations">
+                        <graphic>
+                            <FontIcon iconLiteral="fas-comment-alt" iconSize="20"/>
+                        </graphic>
+                    </Button>
+                    
+                    <Region VBox.vgrow="ALWAYS"/>
+                    
+                    <Button fx:id="logoutButton" styleClass="nav-button, logout-button" text="Déconnexion">
+                        <graphic>
+                            <FontIcon iconLiteral="fas-sign-out-alt" iconSize="24"/>
+                        </graphic>
+                    </Button>
+                </children>
+            </VBox>
+
+            <!-- Main Content Area -->
+            <VBox HBox.hgrow="ALWAYS">
+                <!-- Top Bar -->
+                <VBox styleClass="modern-top-bar" minHeight="70.0" maxHeight="70.0">
+                    <HBox alignment="CENTER_LEFT" spacing="20" styleClass="top-bar-content">
+                        <padding>
+                            <Insets right="30" left="30"/>
+                        </padding>
+                        <HBox alignment="CENTER_LEFT" spacing="15">
+                            <StackPane styleClass="header-icon-container">
+                                <FontIcon iconLiteral="fas-tachometer-alt" iconSize="24" styleClass="header-icon"/>
+                            </StackPane>
+                            <VBox spacing="2">
+                                <Label text="Tableau de Bord" styleClass="modern-header-title"/>
+                                <Label text="Statistiques et analyses" styleClass="header-subtitle"/>
+                            </VBox>
+                        </HBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="refreshButton" styleClass="modern-refresh-button">
+                            <graphic>
+                                <FontIcon iconLiteral="fas-sync-alt" iconSize="16"/>
+                            </graphic>
+                        </Button>
+                    </HBox>
+                </VBox>
+
+                <!-- Dashboard Content -->
+                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="content-area">
+                    <VBox spacing="30">
+                        <padding>
+                            <Insets top="30" right="40" bottom="30" left="40"/>
+                        </padding>
+
+                        <!-- Summary Cards -->
+                        <HBox spacing="20">
+                            <!-- Total Reclamations Card -->
+                            <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                                <padding>
+                                    <Insets top="20" right="25" bottom="20" left="25"/>
+                                </padding>
+                                <HBox alignment="CENTER_LEFT" spacing="15">
+                                    <StackPane styleClass="stat-icon-container">
+                                        <FontIcon iconLiteral="fas-clipboard-list" iconSize="24"/>
+                                    </StackPane>
+                                    <VBox spacing="5">
+                                        <Label text="Total Réclamations" styleClass="stat-title"/>
+                                        <Label fx:id="totalReclamationsLabel" text="0" styleClass="stat-value"/>
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+
+                            <!-- Pending Reclamations Card -->
+                            <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                                <padding>
+                                    <Insets top="20" right="25" bottom="20" left="25"/>
+                                </padding>
+                                <HBox alignment="CENTER_LEFT" spacing="15">
+                                    <StackPane styleClass="stat-icon-container, pending">
+                                        <FontIcon iconLiteral="fas-clock" iconSize="24"/>
+                                    </StackPane>
+                                    <VBox spacing="5">
+                                        <Label text="En Attente" styleClass="stat-title"/>
+                                        <Label fx:id="pendingReclamationsLabel" text="0" styleClass="stat-value"/>
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+
+                            <!-- Resolved Reclamations Card -->
+                            <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+                                <padding>
+                                    <Insets top="20" right="25" bottom="20" left="25"/>
+                                </padding>
+                                <HBox alignment="CENTER_LEFT" spacing="15">
+                                    <StackPane styleClass="stat-icon-container, resolved">
+                                        <FontIcon iconLiteral="fas-check-circle" iconSize="24"/>
+                                    </StackPane>
+                                    <VBox spacing="5">
+                                        <Label text="Résolues" styleClass="stat-title"/>
+                                        <Label fx:id="resolvedReclamationsLabel" text="0" styleClass="stat-value"/>
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Charts Section -->
+                        <HBox spacing="30">
+                            <!-- Type Distribution Chart -->
+                            <VBox styleClass="chart-card" HBox.hgrow="ALWAYS" maxWidth="500">
+                                <padding>
+                                    <Insets top="25" right="25" bottom="25" left="25"/>
+                                </padding>
+                                <Label text="Distribution par Type" styleClass="chart-title"/>
+                                <PieChart fx:id="typeChart" legendVisible="true" labelsVisible="true"/>
+                            </VBox>
+
+                            <!-- Daily Trend Chart -->
+                            <VBox styleClass="chart-card" HBox.hgrow="ALWAYS">
+                                <padding>
+                                    <Insets top="25" right="25" bottom="25" left="25"/>
+                                </padding>
+                                <Label text="Tendance Journalière" styleClass="chart-title"/>
+                                <LineChart fx:id="dailyChart" legendVisible="false">
+                                    <xAxis>
+                                        <CategoryAxis label="Date"/>
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis label="Nombre de réclamations"/>
+                                    </yAxis>
+                                </LineChart>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </ScrollPane>
+            </VBox>
+        </HBox>
+    </children>
+</AnchorPane> 

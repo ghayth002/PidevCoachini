@@ -14,18 +14,18 @@
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             
             <!-- Navigation Sidebar -->
-            <VBox minWidth="220.0" maxWidth="220.0" styleClass="bg" HBox.hgrow="NEVER">
+            <VBox minWidth="180.0" maxWidth="180.0" styleClass="bg" HBox.hgrow="NEVER">
                 <children>
                     <!-- Logo Section -->
-                    <VBox alignment="CENTER" minHeight="150">
-                        <ImageView fitHeight="140.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+                    <VBox alignment="CENTER" minHeight="120">
+                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/logor.png"/>
                             </image>
                         </ImageView>
                     </VBox>
 
-                    <Separator prefWidth="200.0"/>
+                    <Separator prefWidth="160.0"/>
                     
                     <!-- Navigation Buttons -->
                     <Button fx:id="profileButton" styleClass="nav-button" text="Mon Profil">
@@ -34,7 +34,7 @@
                         </graphic>
                     </Button>
                     
-                    <Separator prefWidth="200.0"/>
+                    <Separator prefWidth="160.0"/>
                     
                     <Button fx:id="seanceButton" styleClass="nav-button" text="Mes Séances">
                         <graphic>
@@ -42,7 +42,7 @@
                         </graphic>
                     </Button>
                     
-                    <Separator prefWidth="200.0"/>
+                    <Separator prefWidth="160.0"/>
                     
                     <Button fx:id="produitButton" styleClass="nav-button" text="Produits">
                         <graphic>
@@ -50,7 +50,7 @@
                         </graphic>
                     </Button>
                     
-                    <Separator prefWidth="200.0"/>
+                    <Separator prefWidth="160.0"/>
                     
                     <Button fx:id="offreButton" styleClass="nav-button" text="Offres">
                         <graphic>
@@ -58,7 +58,7 @@
                         </graphic>
                     </Button>
                     
-                    <Separator prefWidth="200.0"/>
+                    <Separator prefWidth="160.0"/>
                     
                     <Button fx:id="eventButton" styleClass="nav-button" text="Evénements">
                         <graphic>
@@ -66,7 +66,7 @@
                         </graphic>
                     </Button>
                     
-                    <Separator prefWidth="200.0"/>
+                    <Separator prefWidth="160.0"/>
                     
                     <Button fx:id="reclamationButton" styleClass="nav-button, active" text="Réclamations">
                         <graphic>

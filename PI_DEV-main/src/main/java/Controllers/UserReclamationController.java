@@ -24,6 +24,8 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.geometry.Insets;
 import Utils.ValidationUtils;
+import Services.ReponseService;
+import Models.Reponse;
 
 public class UserReclamationController implements Initializable {
     @FXML private TextArea descriptionField;
@@ -58,7 +60,7 @@ public class UserReclamationController implements Initializable {
         
         // Style the search field
         searchField.getStyleClass().add("search-box");
-        searchField.setPromptText("Rechercher dans vos réclamations...");
+        searchField.setPromptText("Rechercher par type (PRODUIT, COACH, ADHERENT, EVENEMENT) ou description...");
         
         // Setup refresh button with icon
         FontIcon refreshIcon = new FontIcon(FontAwesomeSolid.SYNC_ALT);
@@ -139,11 +141,33 @@ public class UserReclamationController implements Initializable {
                     HBox statusBox = new HBox(6);
                     statusBox.setAlignment(Pos.CENTER_LEFT);
                     
-                    FontIcon statusIcon = new FontIcon(FontAwesomeSolid.CLOCK);
-                    statusIcon.setIconColor(javafx.scene.paint.Color.web("#856404"));
+                    FontIcon statusIcon = new FontIcon();
+                    Label statusLabel = new Label();
                     
-                    Label statusLabel = new Label("En attente");
-                    statusLabel.getStyleClass().addAll("status-badge", "status-pending");
+                    try {
+                        ReponseService reponseService = new ReponseService();
+                        Reponse existingReponse = reponseService.getByReclamationId(reclamation.getIdReclamation());
+                        
+                        if (existingReponse != null) {
+                            statusIcon.setIconLiteral("fas-check-circle");
+                            statusIcon.setIconColor(javafx.scene.paint.Color.web("#28a745"));
+                            statusLabel.setText("Résolue");
+                            statusLabel.getStyleClass().addAll("status-badge", "status-resolved");
+                        } else {
+                            statusIcon.setIconLiteral("fas-clock");
+                            statusIcon.setIconColor(javafx.scene.paint.Color.web("#856404"));
+                            statusLabel.setText("En attente");
+                            statusLabel.getStyleClass().addAll("status-badge", "status-pending");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        // Default to pending if there's an error
+                        statusIcon.setIconLiteral("fas-clock");
+                        statusIcon.setIconColor(javafx.scene.paint.Color.web("#856404"));
+                        statusLabel.setText("En attente");
+                        statusLabel.getStyleClass().addAll("status-badge", "status-pending");
+                    }
+                    
                     statusBox.getChildren().addAll(statusIcon, statusLabel);
 
                     // Delete button with icon
@@ -207,14 +231,44 @@ public class UserReclamationController implements Initializable {
         filteredReclamations = new FilteredList<>(reclamationsList, p -> true);
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredReclamations.setPredicate(reclamation -> {
+                // If search field is empty, show all reclamations
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
+
                 String lowerCaseFilter = newValue.toLowerCase();
-                return reclamation.getDescription().toLowerCase().contains(lowerCaseFilter) ||
-                       reclamation.getType().toString().toLowerCase().contains(lowerCaseFilter);
+
+                // Check if the search term matches the type
+                boolean matchesType = false;
+                for (typeR type : typeR.values()) {
+                    if (type.toString().toLowerCase().contains(lowerCaseFilter)) {
+                        if (type == reclamation.getType()) {
+                            matchesType = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if description contains search term
+                boolean matchesDescription = reclamation.getDescription().toLowerCase().contains(lowerCaseFilter);
+
+                // Return true if either type or description matches
+                return matchesType || matchesDescription;
             });
             reclamationTable.setItems(filteredReclamations);
+            
+            // Update search icon based on search state
+            FontIcon searchIcon = (FontIcon) searchContainer.getChildren().get(0);
+            if (!newValue.isEmpty()) {
+                searchIcon.setIconLiteral("fas-times");
+                searchIcon.setOnMouseClicked(e -> {
+                    searchField.clear();
+                    loadReclamations();
+                });
+            } else {
+                searchIcon.setIconLiteral("fas-search");
+                searchIcon.setOnMouseClicked(null);
+            }
         });
     }
 

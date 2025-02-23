@@ -77,6 +77,11 @@ public class Gestion_Rep implements Initializable {
         reclamationIdColumn.setCellValueFactory(new PropertyValueFactory<>("id_reclamation"));
         contenuColumn.setCellValueFactory(new PropertyValueFactory<>("contenu"));
         dateRepColumn.setCellValueFactory(new PropertyValueFactory<>("date_reponse"));
+        
+        // Add status column if not already present
+        TableColumn<Reponse, String> statusColumn = new TableColumn<>("Status");
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        reponseTable.getColumns().add(statusColumn);
     }
 
     private void loadReponses() {
@@ -103,7 +108,8 @@ public class Gestion_Rep implements Initializable {
                 0,
                 Integer.parseInt(reclamationIdField.getText()),
                 java.sql.Date.valueOf(dateRepPicker.getValue()),
-                contenuField.getText()
+                contenuField.getText(),
+                Reponse.STATUS_RESOLUE // Set default status
             );
 
             if (reponseService.create(reponse)) {
@@ -131,6 +137,7 @@ public class Gestion_Rep implements Initializable {
             selected.setId_reclamation(Integer.parseInt(reclamationIdField.getText()));
             selected.setDate_reponse(java.sql.Date.valueOf(dateRepPicker.getValue()));
             selected.setContenu(contenuField.getText());
+            selected.setStatus(Reponse.STATUS_RESOLUE); // Update status
 
             reponseService.update(selected);
             showAlert("Succès", "Réponse mise à jour avec succès", Alert.AlertType.INFORMATION);
