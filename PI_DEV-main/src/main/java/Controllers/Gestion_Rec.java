@@ -47,7 +47,7 @@ public class Gestion_Rec implements Initializable {
     @FXML private TableColumn<Reclamation, Integer> adherentColumn;
     @FXML private TableColumn<Reclamation, Date> dateColumn;
     @FXML private TableColumn<Reclamation, Void> actionsColumn;
-    @FXML private Button refreshButton;
+    @FXML private Button refreshTableButton;
     @FXML private TextField search;
     @FXML private FontIcon searchIcon;
     @FXML private Button returnButton;
@@ -64,7 +64,7 @@ public class Gestion_Rec implements Initializable {
             loadReclamations();
 
             // Add refresh handler
-            refreshButton.setOnAction(e -> loadReclamations());
+            refreshTableButton.setOnAction(e -> loadReclamations());
 
             // Setup search functionality
             search.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -84,7 +84,7 @@ public class Gestion_Rec implements Initializable {
             // Style the refresh button icon
             FontIcon refreshIcon = new FontIcon("fas-sync-alt");
             refreshIcon.setIconColor(Color.WHITE);
-            refreshButton.setGraphic(refreshIcon);
+            refreshTableButton.setGraphic(refreshIcon);
 
             // Add return button handler
             returnButton.setOnAction(event -> {

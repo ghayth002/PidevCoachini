@@ -108,56 +108,54 @@
             <!-- Main Content -->
             <VBox HBox.hgrow="ALWAYS">
                 <!-- Top Bar -->
-                <VBox styleClass="modern-top-bar" minHeight="70.0" maxHeight="70.0">
-                    <HBox alignment="CENTER_LEFT" spacing="20" styleClass="top-bar-content">
-                        <padding>
-                            <Insets right="30" left="30"/>
-                        </padding>
-                        <!-- Left side with icon and title -->
-                        <HBox alignment="CENTER_LEFT" spacing="15">
-                            <StackPane styleClass="header-icon-container">
-                                <FontIcon iconLiteral="fas-clipboard-list" iconSize="24" styleClass="header-icon"/>
-                            </StackPane>
-                            <VBox spacing="2">
-                                <Label text="Gestion des Réclamations" styleClass="modern-header-title"/>
-                                <Label text="Administration et suivi" styleClass="header-subtitle"/>
-                            </VBox>
-                        </HBox>
-                        
-                        <!-- Spacer -->
-                        <Region HBox.hgrow="ALWAYS"/>
-                        
-                        <!-- Search container -->
-                        <HBox styleClass="modern-search-container" alignment="CENTER_LEFT">
+                <VBox layoutX="288.0" prefHeight="67.0" prefWidth="1260.0" style="-fx-background-color: #708090;">
+                    <children>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="67.0" prefWidth="1246.0">
                             <children>
-                                <StackPane styleClass="search-icon-container">
-                                    <FontIcon fx:id="searchIcon" iconLiteral="fas-search" iconSize="16" styleClass="search-icon"/>
-                                </StackPane>
-                                <TextField fx:id="search" promptText="Rechercher une réclamation..." 
-                                         styleClass="modern-search-field"/>
+                                <HBox alignment="CENTER" prefHeight="67.0" prefWidth="1159.0">
+                                    <children>
+                                        <Button fx:id="returnButton" styleClass="modern-return-button">
+                                            <graphic>
+                                                <FontIcon iconLiteral="fas-arrow-left" iconSize="16"/>
+                                            </graphic>
+                                            <HBox.margin>
+                                                <Insets right="15.0"/>
+                                            </HBox.margin>
+                                        </Button>
+                                        <TextField fx:id="search" prefHeight="33.0" prefWidth="249.0" promptText="Recherche..." styleClass="search-box">
+                                            <font>
+                                                <Font name="Cambria" size="14.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets />
+                                            </HBox.margin>
+                                        </TextField>
+                                        <ImageView fx:id="isearch" fitHeight="42.0" fitWidth="38.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@img/cherche.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </HBox>
+                                <ImageView fitHeight="57.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/notification.png" />
+                                    </image>
+                                    <HBox.margin>
+                                        <Insets right="22.0" />
+                                    </HBox.margin>
+                                </ImageView>
+                                <ImageView fitHeight="41.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/profile.png" />
+                                    </image>
+                                    <HBox.margin>
+                                        <Insets right="22.0" />
+                                    </HBox.margin>
+                                </ImageView>
                             </children>
                         </HBox>
-                        
-                        <!-- Action Buttons -->
-                        <Button fx:id="returnButton" styleClass="modern-refresh-button">
-                            <graphic>
-                                <FontIcon iconLiteral="fas-arrow-left" iconSize="16"/>
-                            </graphic>
-                            <tooltip>
-                                <Tooltip text="Retour au tableau de bord"/>
-                            </tooltip>
-                        </Button>
-                        <Button fx:id="refreshButton" styleClass="modern-refresh-button">
-                            <graphic>
-                                <FontIcon iconLiteral="fas-sync-alt" iconSize="16"/>
-                            </graphic>
-                        </Button>
-                        <Button styleClass="modern-profile-button">
-                            <graphic>
-                                <FontIcon iconLiteral="fas-user-circle" iconSize="20"/>
-                            </graphic>
-                        </Button>
-                    </HBox>
+                    </children>
                 </VBox>
                 
                 <!-- Content Area -->
