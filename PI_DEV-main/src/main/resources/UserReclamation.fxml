@@ -95,6 +95,11 @@
                                     <children>
                                         <HBox fx:id="searchContainer" alignment="CENTER" styleClass="search-container">
                                             <children>
+                                                <DatePicker fx:id="datePicker" promptText="Sélectionner une date" />
+                                            </children>
+                                        </HBox>
+                                        <HBox fx:id="searchContainer" alignment="CENTER" styleClass="search-container">
+                                            <children>
                                                 <TextField fx:id="searchField" prefHeight="33.0" prefWidth="249.0" promptText="Recherche..." styleClass="search-field">
                                                     <font>
                                                         <Font name="Cambria" size="14.0" />

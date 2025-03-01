@@ -26,6 +26,7 @@ import javafx.geometry.Insets;
 import Utils.ValidationUtils;
 import Services.ReponseService;
 import Models.Reponse;
+import javafx.scene.control.DatePicker;
 
 public class UserReclamationController implements Initializable {
     @FXML private TextArea descriptionField;
@@ -37,6 +38,7 @@ public class UserReclamationController implements Initializable {
     @FXML private ListView<Reclamation> reclamationTable;
     @FXML private Button profileButton;
     @FXML private HBox searchContainer;
+    @FXML private DatePicker datePicker;
 
     private final ReclamationService reclamationService = new ReclamationService();
     private ObservableList<Reclamation> reclamationsList = FXCollections.observableArrayList();
@@ -252,24 +254,41 @@ public class UserReclamationController implements Initializable {
                 // Check if description contains search term
                 boolean matchesDescription = reclamation.getDescription().toLowerCase().contains(lowerCaseFilter);
 
-                // Return true if either type or description matches
-                return matchesType || matchesDescription;
+                // Check if the selected date matches
+                boolean matchesDate = true;
+                if (datePicker.getValue() != null) {
+                    Date selectedDate = java.sql.Date.valueOf(datePicker.getValue());
+                    matchesDate = reclamation.getDate().equals(selectedDate);
+                }
+
+                // Return true if either type, description, or date matches
+                return (matchesType || matchesDescription) && matchesDate;
             });
             reclamationTable.setItems(filteredReclamations);
-            
-            // Update search icon based on search state
-            FontIcon searchIcon = (FontIcon) searchContainer.getChildren().get(0);
-            if (!newValue.isEmpty()) {
-                searchIcon.setIconLiteral("fas-times");
-                searchIcon.setOnMouseClicked(e -> {
-                    searchField.clear();
-                    loadReclamations();
-                });
-            } else {
-                searchIcon.setIconLiteral("fas-search");
-                searchIcon.setOnMouseClicked(null);
-            }
         });
+        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filteredReclamations.setPredicate(filteredReclamation -> {
+                if (newValue == null) {
+                    return true; // Show all if no date is selected
+                }
+                Date selectedDate = java.sql.Date.valueOf(newValue);
+                return filteredReclamation.getDate().equals(selectedDate);
+            });
+            reclamationTable.setItems(filteredReclamations);
+        });
+        
+        // Update search icon based on search state
+        FontIcon searchIcon = (FontIcon) searchContainer.getChildren().get(0);
+        if (!searchField.getText().isEmpty()) {
+            searchIcon.setIconLiteral("fas-times");
+            searchIcon.setOnMouseClicked(e -> {
+                searchField.clear();
+                loadReclamations();
+            });
+        } else {
+            searchIcon.setIconLiteral("fas-search");
+            searchIcon.setOnMouseClicked(null);
+        }
     }
 
     private void handleSubmitReclamation() {

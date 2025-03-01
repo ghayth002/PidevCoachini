@@ -283,13 +283,14 @@ public class Gestion_Rec implements Initializable {
 
             // Validate both content and email
             contenuField.textProperty().addListener((observable, oldValue, newValue) -> {
-                boolean isValid = !newValue.trim().isEmpty() && !emailField.getText().trim().isEmpty();
-                saveButton.setDisable(!isValid);
+                boolean isValidContent = newValue.length() >= 10; // Minimum 10 characters
+                saveButton.setDisable(!isValidContent || emailField.getText().trim().isEmpty());
             });
             
             emailField.textProperty().addListener((observable, oldValue, newValue) -> {
-                boolean isValid = !newValue.trim().isEmpty() && !contenuField.getText().trim().isEmpty();
-                saveButton.setDisable(!isValid);
+                boolean isValidEmail = newValue.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") || newValue.isEmpty();
+                boolean isValidContent = !contenuField.getText().trim().isEmpty();
+                saveButton.setDisable(!isValidEmail || !isValidContent);
             });
 
             // Convert the result to Reponse object when save button is clicked
@@ -389,13 +390,14 @@ public class Gestion_Rec implements Initializable {
             saveButton.setDisable(contenuField.getText().trim().isEmpty() || emailField.getText().trim().isEmpty());
 
             contenuField.textProperty().addListener((observable, oldValue, newValue) -> {
-                boolean isValid = !newValue.trim().isEmpty() && !emailField.getText().trim().isEmpty();
-                saveButton.setDisable(!isValid);
+                boolean isValidContent = newValue.length() >= 10; // Minimum 10 characters
+                saveButton.setDisable(!isValidContent || emailField.getText().trim().isEmpty());
             });
             
             emailField.textProperty().addListener((observable, oldValue, newValue) -> {
-                boolean isValid = !newValue.trim().isEmpty() && !contenuField.getText().trim().isEmpty();
-                saveButton.setDisable(!isValid);
+                boolean isValidEmail = newValue.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") || newValue.isEmpty();
+                boolean isValidContent = !contenuField.getText().trim().isEmpty();
+                saveButton.setDisable(!isValidEmail || !isValidContent);
             });
 
             // Convert the result to Reponse object when save button is clicked
