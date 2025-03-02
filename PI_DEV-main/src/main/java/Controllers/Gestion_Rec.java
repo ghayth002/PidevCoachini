@@ -8,6 +8,7 @@ import Services.ReponseService;
 import Utils.EmailService;
 import Utils.MyDb;
 import Utils.ValidationUtils;
+import Utils.BadWordFilter;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -265,8 +266,16 @@ public class Gestion_Rec implements Initializable {
             TextField emailField = new TextField();
             emailField.setPromptText("Email de l'adhérent");
 
+            // Add censor button
+            Button censorButton = new Button("Censurer le texte");
+            censorButton.setOnAction(e -> {
+                String censoredText = BadWordFilter.censorBadWords(contenuField.getText());
+                contenuField.setText(censoredText);
+            });
+
             grid.add(new Label("Contenu:"), 0, 0);
             grid.add(contenuField, 1, 0);
+            grid.add(censorButton, 2, 0);
             grid.add(new Label("Date:"), 0, 1);
             grid.add(datePicker, 1, 1);
             grid.add(new Label("Email:"), 0, 2);
@@ -284,7 +293,16 @@ public class Gestion_Rec implements Initializable {
             // Validate both content and email
             contenuField.textProperty().addListener((observable, oldValue, newValue) -> {
                 boolean isValidContent = newValue.length() >= 10; // Minimum 10 characters
-                saveButton.setDisable(!isValidContent || emailField.getText().trim().isEmpty());
+                boolean containsBadWords = BadWordFilter.containsBadWords(newValue);
+                
+                if (containsBadWords) {
+                    contenuField.setStyle("-fx-border-color: #dc3545; -fx-border-width: 2px;");
+                    saveButton.setDisable(true);
+                    showBadWordAlert();
+                } else {
+                    contenuField.setStyle(isValidContent ? "-fx-border-color: #28a745; -fx-border-width: 2px;" : "-fx-border-color: #ffa500; -fx-border-width: 2px;");
+                    saveButton.setDisable(!isValidContent || emailField.getText().trim().isEmpty());
+                }
             });
             
             emailField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -373,8 +391,16 @@ public class Gestion_Rec implements Initializable {
             TextField emailField = new TextField();
             emailField.setPromptText("Email de l'adhérent");
 
+            // Add censor button
+            Button censorButton = new Button("Censurer le texte");
+            censorButton.setOnAction(e -> {
+                String censoredText = BadWordFilter.censorBadWords(contenuField.getText());
+                contenuField.setText(censoredText);
+            });
+
             grid.add(new Label("Contenu:"), 0, 0);
             grid.add(contenuField, 1, 0);
+            grid.add(censorButton, 2, 0);
             grid.add(new Label("Date:"), 0, 1);
             grid.add(datePicker, 1, 1);
             grid.add(new Label("Email:"), 0, 2);
@@ -391,7 +417,16 @@ public class Gestion_Rec implements Initializable {
 
             contenuField.textProperty().addListener((observable, oldValue, newValue) -> {
                 boolean isValidContent = newValue.length() >= 10; // Minimum 10 characters
-                saveButton.setDisable(!isValidContent || emailField.getText().trim().isEmpty());
+                boolean containsBadWords = BadWordFilter.containsBadWords(newValue);
+                
+                if (containsBadWords) {
+                    contenuField.setStyle("-fx-border-color: #dc3545; -fx-border-width: 2px;");
+                    saveButton.setDisable(true);
+                    showBadWordAlert();
+                } else {
+                    contenuField.setStyle(isValidContent ? "-fx-border-color: #28a745; -fx-border-width: 2px;" : "-fx-border-color: #ffa500; -fx-border-width: 2px;");
+                    saveButton.setDisable(!isValidContent || emailField.getText().trim().isEmpty());
+                }
             });
             
             emailField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -500,5 +535,16 @@ public class Gestion_Rec implements Initializable {
         replyIcon.setScaleX(0.7);
         replyIcon.setScaleY(0.7);
         return replyIcon;
+    }
+
+    /**
+     * Affiche une alerte pour informer l'utilisateur que le texte contient des mots inappropriés
+     */
+    private void showBadWordAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Contenu inapproprié");
+        alert.setHeaderText("Mots inappropriés détectés");
+        alert.setContentText("Votre texte contient des mots inappropriés. Veuillez reformuler votre message de manière professionnelle.");
+        alert.showAndWait();
     }
 }

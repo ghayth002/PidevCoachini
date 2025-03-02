@@ -24,6 +24,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.geometry.Insets;
 import Utils.ValidationUtils;
+import Utils.BadWordFilter;
 import Services.ReponseService;
 import Models.Reponse;
 import javafx.scene.control.DatePicker;
@@ -401,6 +402,12 @@ public class UserReclamationController implements Initializable {
             isValid = false;
         } else if (description.length() < 10) {
             descriptionField.setStyle("-fx-border-color: #ffa500; -fx-border-width: 2px;");
+            isValid = false;
+        } else if (BadWordFilter.containsBadWords(description)) {
+            // Vérification des mots inappropriés
+            descriptionField.setStyle("-fx-border-color: #dc3545; -fx-border-width: 2px;");
+            showAlert(Alert.AlertType.ERROR, "Contenu inapproprié", 
+                "Votre réclamation contient des mots inappropriés. Veuillez reformuler votre message.");
             isValid = false;
         }
 
